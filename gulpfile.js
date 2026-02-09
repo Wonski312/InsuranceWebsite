@@ -29,7 +29,7 @@ const kit = require('gulp-kit');
 
 
 const paths = {
-//linki do plików z których pobieramy i np sassDest do którego ląduja przerobione
+	//linki do plików z których pobieramy i np sassDest do którego ląduja przerobione
 
 	html: "./html/**/*.kit",
 	sass: "./src/sass/**/*.scss",
@@ -95,7 +95,7 @@ function minimizeImages(done) {
 
 //kasowanie calego folderu dist 
 function cleanStaff(done) {
-	src(paths.dist, {read: false})
+	src(paths.dist, { read: false })
 		.pipe(clean());
 
 	done();
@@ -108,6 +108,10 @@ function startBrowserSync(done) {
 		server: {
 			baseDir: "./",
 		},
+		port: 3005,
+		ui: {
+			port: 3006
+		}
 	});
 	done();
 }
@@ -115,10 +119,10 @@ function watchForChanges(done) {
 	//obserwacja zmian 
 	//sciezka z browserSync strony (Manual Reloading) parzy na zmiany w html tylko
 	watch("./*.html").on("change", reload);
-	
+
 	//obserwacja innych plikow (sass,js -musza byc w tablicy (zeby bylo podstawione dobrze pod sciezke))
 	//jak bedzie jakas zmiana to odpali nasze funkcje
-	watch([paths.html,paths.sass, paths.js], parallel(handleKits,sassCompiler, javascript)).on("change", reload);
+	watch([paths.html, paths.sass, paths.js], parallel(handleKits, sassCompiler, javascript)).on("change", reload);
 
 	//oddzielne reload dla obrazków zeby nie odpalala sie funkcja za kazdym razem kiedy cos sie zmieni w css tylko jak zmienia sie obrazy i img
 
